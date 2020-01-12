@@ -50,18 +50,15 @@ app.post("/", function (req, res) {
 
 
     var data = {
-        members: [
-            {
-                email_address: email,
-                status: "subscribed",
-                merge_fields: {
-                    FNAME: firstName,
-                    LNAME: lastName
-                }
-
+        members: [{
+            email_address: email,
+            status: "subscribed",
+            merge_fields: {
+                FNAME: firstName,
+                LNAME: lastName
             }
-        ]   
-    }
+        }]
+    };
 
     var jsonData = JSON.stringify(data);
 
@@ -72,24 +69,25 @@ app.post("/", function (req, res) {
             "Authorization": "ohhnvs af5c6ced91c0bef5ba56f65fa39cb25f-us4"
         },
         body: jsonData
-
     };
 
     request(options, function (error, response, body) {
         if (error) {
-            // console.log(error);
             res.sendFile(__dirname + "/failure.html");
         } else {
-           if(response.statusCode === 200){
-               res.sendFile(__dirname + "/success.html");
-           }else{
-               res.sendFile(__dirname + "/failure.html");
-           }
+            console.log(response.statusCode);
+            if (response.statusCode === 200) {
+                console.log(response.statusCode);
+                res.sendFile(__dirname + "/success.html");
+            } else { 
+                console.log(response.statusCode);
+                res.sendFile(__dirname + "/failure.html");
+            }
         }
     });
 });
 
-app.post("/failure", function(req, res){
+app.post("/failure", function (req, res) {
     res.redirect("/");
 });
 
@@ -112,5 +110,5 @@ app.listen(process.env.PORT || 3000, function () {
 //API Key
 // af5c6ced91c0bef5ba56f65fa39cb25f-us4
 
-//List ID
+//List Audience ID
 //a1c6522bb0
